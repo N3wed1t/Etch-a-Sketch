@@ -1,0 +1,21 @@
+body {
+    display: flex;
+}
+
+.container {
+    border: 1px solid;
+    border-color: gray;
+    white-space: nowrap;
+    cursor: alias;
+    width: 800px;
+    height: 800px;
+}
+
+.grid {
+    border: 1px solid;
+    border-color: gray;
+}
+
+.grid:hover {
+    background-color: rgba(211, 211, 211, 0.385);
+}
