@@ -10,15 +10,15 @@ let mouseDown = false;
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
 
-function makeGrid(column, row){
-    for(let i = 0; i < row; i++){
+function makeGrid(size){
+    for(let i = 0; i < size; i++){
         const hori = document.createElement('span');
         hori.style.display = 'flex';
-        for(let j = 0; j < column; j++){
+        for(let j = 0; j < size; j++){
             const grid = document.createElement('div');
             grid.classList.add('grid');
-            grid.style.width = `${(800/row - 2)}px`;
-            grid.style.height = `${(800/column - 2)}px`;
+            grid.style.width = `${(800/size - 2)}px`;
+            grid.style.height = `${(800/size - 2)}px`;
             hori.appendChild(grid);
         }
         container.appendChild(hori);
@@ -26,14 +26,14 @@ function makeGrid(column, row){
     content.insertBefore(container, content.children[1]);
 
 }
-makeGrid(16,16);
+makeGrid(16);
 
 
 const changeSize = document.querySelector('#change-size');
 changeSize.addEventListener('click', () => {
     let size = prompt('Enter Canvas Size: ');
     container.replaceChildren();
-    makeGrid(size.split('x')[0], size.split('x')[1]);
+    makeGrid(size);
     draw();
 });
 
