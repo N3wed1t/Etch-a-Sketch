@@ -1,3 +1,8 @@
+* {
+    user-select: none;
+    cursor: alias;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -16,7 +21,7 @@ body {
 
 h1 {
     padding-top: 2%;
-    padding-bottom: 2%;
+    padding-bottom: 1.5%;
     width: 25%;
     margin: 0;
     align-self: center;
