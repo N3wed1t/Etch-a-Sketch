@@ -1,5 +1,5 @@
 const container = document.createElement('div');
-const body = document.querySelector('body');
+const content = document.querySelector('.content');
 
 container.classList.add('container');
 
@@ -17,7 +17,7 @@ function makeGrid(column, row){
         }
         container.appendChild(hori);
     }
-    body.appendChild(container);
+    content.insertBefore(container, content.children[1]);
 
 }
 makeGrid(16,16);
@@ -40,6 +40,8 @@ pixels.forEach((pixel) => {
 });
 
 //change size and hover bgcolor dont change
+
+//a lot feature
 
 
     

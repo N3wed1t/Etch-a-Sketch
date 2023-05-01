@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -9,6 +10,17 @@ body {
     cursor: alias;
     width: 800px;
     height: 800px;
+    align-self: center;
+    box-shadow: 0px 0px 10px grey;
+}
+
+h1 {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 25%;
+    margin: 0;
+    align-self: center;
+    text-align: center;
 }
 
 .grid {
@@ -18,4 +30,25 @@ body {
 
 .grid:hover {
     background-color: rgba(211, 211, 211, 0.385);
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.fn-container ,.color-palette{
+    width: 200px;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    border-radius: 10px;
+    width: 90%;
+    height: 10%;
+    font-size: large;
 }
