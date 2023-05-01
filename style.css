@@ -28,9 +28,13 @@ h1 {
     text-align: center;
 }
 
-.grid {
+.border {
     border: 1px solid;
     border-color: gray;
+}
+
+.grid {
+    background-color: white;
 }
 
 .grid:hover {
