@@ -14,6 +14,7 @@ document.body.onmouseup = () => (mouseDown = false);
 
 function makeGrid(size){
     currentSize = size;
+    border = true;
     for(let i = 0; i < size; i++){
         const hori = document.createElement('span');
         hori.style.display = 'flex';
