@@ -6,5 +6,5 @@ What I have learn:
 
 -CSS Cursor & WhiteSpace, User-select, Transition, Transform
 
--JS replaceChildren(), document.body.onmousedown = () => (mouseDown = true);
+-JS replaceChildren(), document.body.onmousedown = () => (mouseDown = true);, indexOf()
 

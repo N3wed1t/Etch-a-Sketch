@@ -15,6 +15,18 @@ function startup() {
     colorPicker.select();
 }
 
+let plateColor = ['#ff0000', '#ff8000', '#ffff00', '#80ff00', '#00ff00', '#00ff80' ,'#00ffff' 
+                ,'#0080ff', '#0000ff', '#8000ff', '#ff00ff', '#ff0080', '#000000', '#505050'];
+
+const colorSet = document.querySelector('.color-set');
+
+plateColor.forEach((color) => {
+    const preColor = document.createElement('div');
+    preColor.style.backgroundColor = color;
+    preColor.classList.add('color-plate');
+    colorSet.appendChild(preColor);
+});
+
 
 const container = document.createElement('div');
 const content = document.querySelector('.content');
@@ -73,6 +85,19 @@ eraser.addEventListener('click', () => {
     activateBG();
 });
 
+const saveColor = document.querySelector('#save-color');
+saveColor.addEventListener('click', () => {
+    if(plateColor.indexOf(colorPicker.value) < 0){
+        const preColor = document.createElement('div');
+        plateColor.push(colorPicker.value);
+        preColor.style.backgroundColor = colorPicker.value;
+        preColor.classList.add('color-plate');
+        colorSet.appendChild(preColor);
+        loadColor();
+    }
+    
+});
+
 function activateBG(){
     if(mode === 'normal'){
         normal.classList.add('activate');
@@ -113,6 +138,16 @@ function draw() {
     });
 }
 
+function loadColor(){
+    const selColor = document.querySelectorAll('.color-plate');
+    selColor.forEach((plate) => {
+        plate.addEventListener('mousedown', () => {
+            colorPicker.value = rgbToHex(plate.style.backgroundColor)
+            brushColor = colorPicker.value;
+        });
+    });
+}
+
 function coloringGrid(e){
     if((e.type === 'mouseover' && mouseDown) || e.type === 'mousedown'){
         if(mode === 'normal'){
@@ -126,6 +161,19 @@ function coloringGrid(e){
         }
     }
 }
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+  
+function rgbToHex(rgb) {
+    let colorCode = rgb.split(',');
+    return "#" + componentToHex(Math.floor(colorCode[0].trim().slice(4))) 
+                + componentToHex(Math.floor(colorCode[1].trim())) 
+                + componentToHex(Math.floor(colorCode[2].trim().slice(0, -1)));
+}
+
 
 const toggleBorder = document.querySelector('#toggle-border');
 toggleBorder.addEventListener('click', () => {
@@ -144,7 +192,7 @@ toggleBorder.addEventListener('click', () => {
     });
 });
 
-
+loadColor();
 activateBG();
 draw();
 
