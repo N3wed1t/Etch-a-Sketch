@@ -43,20 +43,46 @@ changeSize.addEventListener('click', () => {
 });
 
 const normal = document.querySelector('#normal');
-normal.addEventListener('click', () => mode = 'normal');
+normal.addEventListener('click', () => {
+    mode = 'normal';
+    activateBG();
+});
 
 const rainbow = document.querySelector('#rainbow');
-rainbow.addEventListener('click', () => mode = 'rainbow');
+rainbow.addEventListener('click', () => {
+    mode = 'rainbow';
+    activateBG();
+});
 
 const eraser = document.querySelector('#eraser');
-eraser.addEventListener('click', () => mode = 'eraser');
+eraser.addEventListener('click', () => {
+    mode = 'eraser';
+    activateBG();
+});
+
+function activateBG(){
+    if(mode === 'normal'){
+        normal.classList.add('activate');
+        rainbow.classList.remove('activate');
+        eraser.classList.remove('activate');
+    }else if(mode === 'rainbow'){
+        normal.classList.remove('activate');
+        rainbow.classList.add('activate');
+        eraser.classList.remove('activate');
+    }else if(mode === 'eraser'){
+        normal.classList.remove('activate');
+        rainbow.classList.remove('activate');
+        eraser.classList.add('activate');
+    }
+}
+
 
 function normalBrush(){
     return brushColor;
 }
 
 function eraserBrush(){
-    return 'white';
+    return '';
 }
 
 function rainbowBrush() {
@@ -104,7 +130,7 @@ toggleBorder.addEventListener('click', () => {
         
     });
 });
-
+activateBG();
 draw();
 
     
