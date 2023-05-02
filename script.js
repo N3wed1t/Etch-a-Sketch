@@ -1,7 +1,20 @@
-let brushColor = 'black';
+const defaultColor = '#000000';
+let brushColor = defaultColor;
+let colorPicker;
 let mode = 'normal';
 let currentSize;
 let border = true;
+
+window.addEventListener('load', startup, false);
+
+function startup() {
+    colorPicker = document.querySelector("#color-palette");
+    colorPicker.value = defaultColor;
+    colorPicker.addEventListener("input", () => brushColor = colorPicker.value);
+    colorPicker.addEventListener("change", () => brushColor = colorPicker.value);
+    colorPicker.select();
+}
+
 
 const container = document.createElement('div');
 const content = document.querySelector('.content');
@@ -130,6 +143,8 @@ toggleBorder.addEventListener('click', () => {
         
     });
 });
+
+
 activateBG();
 draw();
 
