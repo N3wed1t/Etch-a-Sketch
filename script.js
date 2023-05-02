@@ -48,8 +48,15 @@ normal.addEventListener('click', () => mode = 'normal');
 const rainbow = document.querySelector('#rainbow');
 rainbow.addEventListener('click', () => mode = 'rainbow');
 
+const eraser = document.querySelector('#eraser');
+eraser.addEventListener('click', () => mode = 'eraser');
+
 function normalBrush(){
     return brushColor;
+}
+
+function eraserBrush(){
+    return 'white';
 }
 
 function rainbowBrush() {
@@ -69,10 +76,16 @@ function draw() {
 
 function coloringGrid(e){
     if((e.type === 'mouseover' && mouseDown) || e.type === 'mousedown'){
-        e.target.style.backgroundColor = mode === 'normal' ? normalBrush() 
-        : mode === 'rainbow' ? rainbowBrush() : 'black';
+        if(mode === 'normal'){
+            e.target.style.backgroundColor = normalBrush();
+        }else if(mode === 'rainbow'){
+            e.target.style.backgroundColor = rainbowBrush();
+        }else if(mode === 'eraser'){
+            e.target.style.backgroundColor = eraserBrush();
+        }else{
+            e.target.style.backgroundColor = 'black';
+        }
     }
-    
 }
 
 const toggleBorder = document.querySelector('#toggle-border');
