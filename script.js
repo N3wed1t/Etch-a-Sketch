@@ -85,6 +85,18 @@ eraser.addEventListener('click', () => {
     activateBG();
 });
 
+const darken = document.querySelector('#darken');
+darken.addEventListener('click', () => {
+    mode = 'darken';
+    activateBG();
+});
+
+const lighten = document.querySelector('#lighten');
+lighten.addEventListener('click', () => {
+    mode = 'lighten';
+    activateBG();
+});
+
 const saveColor = document.querySelector('#save-color');
 saveColor.addEventListener('click', () => {
     if(plateColor.indexOf(colorPicker.value) < 0){
@@ -95,7 +107,6 @@ saveColor.addEventListener('click', () => {
         colorSet.appendChild(preColor);
         loadColor();
     }
-    
 });
 
 function activateBG(){
@@ -103,14 +114,32 @@ function activateBG(){
         normal.classList.add('activate');
         rainbow.classList.remove('activate');
         eraser.classList.remove('activate');
+        darken.classList.remove('activate');
+        lighten.classList.remove('activate');
     }else if(mode === 'rainbow'){
         normal.classList.remove('activate');
         rainbow.classList.add('activate');
         eraser.classList.remove('activate');
+        darken.classList.remove('activate');
+        lighten.classList.remove('activate');
     }else if(mode === 'eraser'){
         normal.classList.remove('activate');
         rainbow.classList.remove('activate');
         eraser.classList.add('activate');
+        darken.classList.remove('activate');
+        lighten.classList.remove('activate');
+    }else if(mode === 'darken'){
+        normal.classList.remove('activate');
+        rainbow.classList.remove('activate');
+        eraser.classList.remove('activate');
+        darken.classList.add('activate');
+        lighten.classList.remove('activate');
+    }else if(mode === 'lighten'){
+        normal.classList.remove('activate');
+        rainbow.classList.remove('activate');
+        eraser.classList.remove('activate');
+        darken.classList.remove('activate');
+        lighten.classList.add('activate');
     }
 }
 
@@ -130,6 +159,26 @@ function rainbowBrush() {
     return `rgb(${red}, ${green}, ${blue})`;
 }
 
+function darkenBrush(e) {
+    let rgbValue = e.target.style.backgroundColor;
+    if(rgbValue !== ''){
+        let hslValue = RGBToHSL(rgbValue);
+        return `${hslValue.split(',')[0]}, ${hslValue.split(',')[1]}, ${hslValue.split(',')[2].slice(0,-2) - 5}%)`;
+    }else{
+        return '';
+    }
+}
+
+function lightenBrush(e) {
+    let rgbValue = e.target.style.backgroundColor;
+    if(rgbValue !== ''){
+        let hslValue = RGBToHSL(rgbValue);
+        return `${hslValue.split(',')[0]}, ${hslValue.split(',')[1]}, ${Math.floor(hslValue.split(',')[2].slice(0,-2)) + 5}%)`;
+    }else{
+        return '';
+    }
+}
+
 function draw() {
     const pixels = document.querySelectorAll('.grid');
     pixels.forEach((pixel) => {
@@ -142,7 +191,7 @@ function loadColor(){
     const selColor = document.querySelectorAll('.color-plate');
     selColor.forEach((plate) => {
         plate.addEventListener('mousedown', () => {
-            colorPicker.value = rgbToHex(plate.style.backgroundColor)
+            colorPicker.value = RGBToHex(plate.style.backgroundColor)
             brushColor = colorPicker.value;
         });
     });
@@ -156,6 +205,10 @@ function coloringGrid(e){
             e.target.style.backgroundColor = rainbowBrush();
         }else if(mode === 'eraser'){
             e.target.style.backgroundColor = eraserBrush();
+        }else if(mode === 'darken'){
+            e.target.style.backgroundColor = darkenBrush(e);
+        }else if(mode === 'lighten'){
+            e.target.style.backgroundColor = lightenBrush(e);
         }else{
             e.target.style.backgroundColor = 'black';
         }
@@ -167,13 +220,51 @@ function componentToHex(c) {
     return hex.length == 1 ? "0" + hex : hex;
 }
   
-function rgbToHex(rgb) {
+function RGBToHex(rgb) {
     let colorCode = rgb.split(',');
     return "#" + componentToHex(Math.floor(colorCode[0].trim().slice(4))) 
                 + componentToHex(Math.floor(colorCode[1].trim())) 
                 + componentToHex(Math.floor(colorCode[2].trim().slice(0, -1)));
 }
 
+function RGBToHSL(preRGB) {
+    let rgbCode = preRGB.split(',');
+    let r = Math.floor(rgbCode[0].trim().slice(4));
+    let g = Math.floor(rgbCode[1].trim());
+    let b = Math.floor(rgbCode[2].trim().slice(0, -1));
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+    if (delta == 0)
+        h = 0;
+    else if (cmax == r)
+        h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+        h = (b - r) / delta + 2;
+    else
+        h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+      
+    if (h < 0)
+        h += 360;
+
+    l = (cmax + cmin) / 2;
+
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+  return "hsl(" + h + "," + s + "%," + l + "%)";
+}
 
 const toggleBorder = document.querySelector('#toggle-border');
 toggleBorder.addEventListener('click', () => {

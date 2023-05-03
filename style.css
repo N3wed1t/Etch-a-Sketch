@@ -181,3 +181,29 @@ input[type="color"]:focus-visible {
     width: 30px;
     height: 30px;
 }
+
+span {
+    display: flex;
+}
+
+.shading {
+    width: 85%;
+    height: 10%;
+}
+
+.shading > button {
+    width: 50%;
+    height: 100%;
+}
+
+#darken {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 1px solid rgb(190, 190, 190);
+}
+
+#lighten {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 1px solid rgb(190, 190, 190);
+}
