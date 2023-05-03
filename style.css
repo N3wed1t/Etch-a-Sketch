@@ -15,7 +15,7 @@ body {
     border: 1px solid;
     border-color: gray;
     white-space: nowrap;
-    cursor: alias;
+    cursor: normal;
     width: auto;
     height: auto;
     align-self: center;
