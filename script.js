@@ -54,30 +54,7 @@ applySize.addEventListener('click', () => {
 
 const clearCanvas = document.querySelector('#clear-canvas');
 clearCanvas.addEventListener('click', () => {
-    const rows = document.querySelectorAll('.container > span');
-    sizeLabel.textContent = `Size: ${currentSize} x ${currentSize}`;
-    sizeSlider.value = currentSize;
-    var i = 0;
-    function myLoop() {
-        setTimeout(function() {
-            for(let j = 0; j < rows[i].children.length; j++){
-                rows[i].children[j].style.transition = 'all 0.5s';
-                rows[i].children[j].style.backgroundColor = '';
-            }
-            i++;
-            if (i < rows.length) {
-                myLoop();
-            }
-        }, 500 / currentSize)
-    }
-    myLoop();
-    setTimeout(() => {
-        const pixels = document.querySelectorAll('.grid');
-        pixels.forEach((pixel) => {
-        pixel.style.transition = '';
-    });    
-    }, 750);
-      
+    resetCanvas();
 });
 
 
@@ -91,6 +68,9 @@ const rainbow = document.querySelector('#rainbow');
 rainbow.addEventListener('click', () => {
     mode = 'rainbow';
     activateBG();
+});
+rainbow.addEventListener('dblclick', () => {
+    resetCanvas(1);
 });
 
 const eraser = document.querySelector('#eraser');
@@ -141,6 +121,32 @@ function makeGrid(size){
     }
     content.insertBefore(container, content.children[1]);
 
+}
+
+function resetCanvas(fn = ''){
+    const rows = document.querySelectorAll('.container > span');
+    sizeLabel.textContent = `Size: ${currentSize} x ${currentSize}`;
+    sizeSlider.value = currentSize;
+    var i = 0;
+    function myLoop() {
+        setTimeout(function() {
+            for(let j = 0; j < rows[i].children.length; j++){
+                rows[i].children[j].style.transition = 'all 0.5s';
+                rows[i].children[j].style.backgroundColor = fn !== 1 ? fn : rainbowBrush();
+            }
+            i++;
+            if (i < rows.length) {
+                myLoop();
+            }
+        }, 500 / currentSize)
+    }
+    myLoop();
+    setTimeout(() => {
+        const pixels = document.querySelectorAll('.grid');
+        pixels.forEach((pixel) => {
+        pixel.style.transition = '';
+    });    
+    }, (500 / currentSize) <= 10 ? 40 * currentSize: 50 * currentSize);
 }
 
 function activateBG(){
