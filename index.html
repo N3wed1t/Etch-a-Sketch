@@ -13,7 +13,14 @@
     <h1>Etch-a-Sketch</h1>
     <div class="content">
         <div class="fn-container">
-            <button id="change-size">Change Size</button>
+            <div class="size-container">
+                <label id='size-label' for="change-size">Size:</label>
+                <input type="range" id="change-size" min="3" max="128" step="1" value="16">
+                <div class="size-button">
+                    <button id="apply-size">Apply</button>
+                    <button id="clear-canvas">Clear</button>
+                </div>
+            </div>
             <button id="normal">Normal</button>
             <button id="rainbow">Rainbow</button>
             <button id="eraser">Eraser</button>

@@ -1,6 +1,7 @@
 * {
     user-select: none;
     cursor: alias;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -203,6 +204,45 @@ span {
 }
 
 #lighten {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 1px solid rgb(190, 190, 190);
+}
+
+label {
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.size-container {
+    width: 85%;
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="range"] {
+    margin-top: 20px;
+}
+
+.size-button {
+    display: flex;
+    padding-top: 20px;
+}
+
+#apply-size, #clear-canvas {
+    height: 100%;
+}
+
+#apply-size {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 1px solid rgb(190, 190, 190);
+}
+
+#clear-canvas {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: 1px solid rgb(190, 190, 190);

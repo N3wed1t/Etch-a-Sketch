@@ -37,35 +37,49 @@ let mouseDown = false;
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
 
-function makeGrid(size){
-    currentSize = size;
-    border = true;
-    for(let i = 0; i < size; i++){
-        const hori = document.createElement('span');
-        hori.style.display = 'flex';
-        for(let j = 0; j < size; j++){
-            const grid = document.createElement('div');
-            grid.classList.add('grid');
-            grid.classList.add('border');
-            grid.style.width = `${(800/size - 2)}px`;
-            grid.style.height = `${(800/size - 2)}px`;
-            hori.appendChild(grid);
-        }
-        container.appendChild(hori);
-    }
-    content.insertBefore(container, content.children[1]);
+const sizeSlider = document.querySelector('#change-size');
+const sizeLabel = document.querySelector('#size-label');
 
-}
-makeGrid(16);
+sizeLabel.textContent = `Size: ${sizeSlider.value} x ${sizeSlider.value}`;
+sizeSlider.addEventListener("input", (event) => {
+    sizeLabel.textContent = `Size: ${event.target.value} x ${event.target.value}`;
+})
 
-
-const changeSize = document.querySelector('#change-size');
-changeSize.addEventListener('click', () => {
-    let size = prompt('Enter Canvas Size: ');
+const applySize = document.querySelector('#apply-size');
+applySize.addEventListener('click', () => {
     container.replaceChildren();
-    makeGrid(size);
+    makeGrid(sizeSlider.value);
     draw();
 });
+
+const clearCanvas = document.querySelector('#clear-canvas');
+clearCanvas.addEventListener('click', () => {
+    const rows = document.querySelectorAll('.container > span');
+    sizeLabel.textContent = `Size: ${currentSize} x ${currentSize}`;
+    sizeSlider.value = currentSize;
+    var i = 0;
+    function myLoop() {
+        setTimeout(function() {
+            for(let j = 0; j < rows[i].children.length; j++){
+                rows[i].children[j].style.transition = 'all 0.5s';
+                rows[i].children[j].style.backgroundColor = '';
+            }
+            i++;
+            if (i < rows.length) {
+                myLoop();
+            }
+        }, 500 / currentSize)
+    }
+    myLoop();
+    setTimeout(() => {
+        const pixels = document.querySelectorAll('.grid');
+        pixels.forEach((pixel) => {
+        pixel.style.transition = '';
+    });    
+    }, 750);
+      
+});
+
 
 const normal = document.querySelector('#normal');
 normal.addEventListener('click', () => {
@@ -108,6 +122,26 @@ saveColor.addEventListener('click', () => {
         loadColor();
     }
 });
+
+function makeGrid(size){
+    currentSize = size;
+    border = true;
+    for(let i = 0; i < size; i++){
+        const hori = document.createElement('span');
+        hori.style.display = 'flex';
+        for(let j = 0; j < size; j++){
+            const grid = document.createElement('div');
+            grid.classList.add('grid');
+            grid.classList.add('border');
+            grid.style.width = `${(800/size - 2)}px`;
+            grid.style.height = `${(800/size - 2)}px`;
+            hori.appendChild(grid);
+        }
+        container.appendChild(hori);
+    }
+    content.insertBefore(container, content.children[1]);
+
+}
 
 function activateBG(){
     if(mode === 'normal'){
@@ -282,7 +316,7 @@ toggleBorder.addEventListener('click', () => {
         
     });
 });
-
+makeGrid(16);
 loadColor();
 activateBG();
 draw();

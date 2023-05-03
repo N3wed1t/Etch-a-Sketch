@@ -2,7 +2,7 @@
 
 
 What I have learn:
--HTML Color picker
+-HTML Color picker, Input range
 
 -CSS Cursor & WhiteSpace, User-select, Transition, Transform
 
